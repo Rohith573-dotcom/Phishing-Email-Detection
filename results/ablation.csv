@@ -1,0 +1,13 @@
+view,model,accuracy,f1,recall
+Text (TF-IDF) only,Logistic Regression,0.9062,0.908,0.8992
+Text (TF-IDF) only,Naive Bayes,0.8982,0.8998,0.8876
+Text (TF-IDF) only,Random Forest,0.8862,0.888,0.876
+Text (TF-IDF) only,Neural Network,0.8962,0.8976,0.8837
+Metadata only,Logistic Regression,0.9042,0.9055,0.8915
+Metadata only,Naive Bayes,0.8723,0.8828,0.9341
+Metadata only,Random Forest,0.8942,0.8975,0.8992
+Metadata only,Neural Network,0.8922,0.8958,0.8992
+Text + Metadata,Logistic Regression,0.9222,0.9234,0.9109
+Text + Metadata,Naive Bayes,0.9202,0.9225,0.9225
+Text + Metadata,Random Forest,0.9062,0.9073,0.8915
+Text + Metadata,Neural Network,0.9142,0.9159,0.907

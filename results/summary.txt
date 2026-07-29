@@ -1,0 +1,116 @@
+==========================================================================
+AI-DRIVEN PHISHING EMAIL DETECTION USING NLP
+IICT Summer Internship 2026  |  Project 2
+==========================================================================
+[Phase 1] Loaded data/emails_raw.csv  (synthetic sample corpus)
+[Phase 1] Dropped 0 null/duplicate rows -> 2500 e-mails
+[Phase 2] Cleaned corpus written to data/emails_clean.csv (0.1s)
+[Phase 2] Mean body length: 576 chars raw -> 506 chars cleaned (12.1% removed as markup/URLs)
+[Phase 2] Class balance: {'Legitimate': 1214, 'Phishing': 1286}
+
+[Phase 3] Tokenised 2500 messages in 0.3s
+[Phase 3] Structural feature matrix: (2500, 17) (17 hand-designed features)
+
+[Phase 3] Structural feature profile (class-conditional means)
+               feature  legitimate_mean  phishing_mean  ratio
+       n_insecure_urls            0.245          1.908   7.80
+            has_ip_url            0.069          0.497   7.18
+       has_html_anchor            0.077          0.404   5.22
+      generic_greeting            0.169          0.837   4.95
+       credential_hits            1.344          6.500   4.84
+        n_exclamations            0.230          1.110   4.83
+           reward_hits            0.256          1.221   4.77
+  subject_urgency_hits            0.150          0.671   4.48
+ sender_domain_hyphens            0.188          0.838   4.46
+sender_is_role_account            0.188          0.838   4.46
+     body_urgency_hits            0.896          3.191   3.56
+                n_urls            0.848          2.130   2.51
+    subject_caps_ratio            0.061          0.121   1.99
+    max_url_path_depth            1.285          2.271   1.77
+     sender_domain_len           19.624         23.889   1.22
+       body_word_count           86.983         95.382   1.10
+sender_subdomain_depth            1.000          1.000   1.00
+
+[Phase 3] Split: 1999 train / 501 test (stratified)
+[Phase 3] TF-IDF matrix: (1999, 1200), sparsity 92.9%
+[Phase 3] Combined matrix: (1999, 1217)
+
+==========================================================================
+[Phase 4] TRAINING FOUR FROM-SCRATCH CLASSIFIERS (text + metadata)
+==========================================================================
+
+--- Logistic Regression ---
+  accuracy 0.9222 | precision 0.9363 | recall 0.9109 | F1 0.9234 | AUC 0.9688
+  false positives 16 (legit blocked) | false negatives 23 (phish delivered) | fit 2.74s
+               precision    recall  f1-score   support
+
+LEGITIMATE (0)     0.908     0.934     0.921       243
+PHISHING (1)       0.936     0.911     0.923       258
+
+accuracy                               0.922       501
+
+--- Naive Bayes ---
+  accuracy 0.9202 | precision 0.9225 | recall 0.9225 | F1 0.9225 | AUC 0.9691
+  false positives 20 (legit blocked) | false negatives 20 (phish delivered) | fit 0.01s
+               precision    recall  f1-score   support
+
+LEGITIMATE (0)     0.918     0.918     0.918       243
+PHISHING (1)       0.922     0.922     0.922       258
+
+accuracy                               0.920       501
+
+--- Random Forest ---
+  accuracy 0.9062 | precision 0.9237 | recall 0.8915 | F1 0.9073 | AUC 0.9684
+  false positives 19 (legit blocked) | false negatives 28 (phish delivered) | fit 12.42s
+               precision    recall  f1-score   support
+
+LEGITIMATE (0)     0.889     0.922     0.905       243
+PHISHING (1)       0.924     0.891     0.907       258
+
+accuracy                               0.906       501
+
+--- Neural Network ---
+  accuracy 0.9142 | precision 0.9249 | recall 0.9070 | F1 0.9159 | AUC 0.9598
+  false positives 19 (legit blocked) | false negatives 24 (phish delivered) | fit 3.66s
+               precision    recall  f1-score   support
+
+LEGITIMATE (0)     0.903     0.922     0.912       243
+PHISHING (1)       0.925     0.907     0.916       258
+
+accuracy                               0.914       501
+
+[Phase 5] Strongest phishing cues   : ['n_insecure_urls', 'credential_hits', 'body_urgency_hits', 'generic_greeting', 'reward_hits', 'informate', 'subject_caps_ratio', 'payment']
+[Phase 5] Strongest legitimate cues : ['budget', 'budget_worksheet', 'comment', 'updat', 'updat_budget', 'worksheet', 'clos', 'office_clos']
+[Phase 5] Random-forest top splits  : ['n_insecure_urls', 'body_urgency_hits', 'credential_hits', 'sender_domain_len', 'dear_customer', 'hi', 'customer', 'sender_is_role_account', 'account', 'subject_caps_ratio', 'generic_greeting', 'click']
+
+==========================================================================
+[Phase 5] ABLATION - which feature channel carries the signal?
+==========================================================================
+  Text (TF-IDF) only     Logistic Regression    acc 0.9062  F1 0.9080
+  Text (TF-IDF) only     Naive Bayes            acc 0.8982  F1 0.8998
+  Text (TF-IDF) only     Random Forest          acc 0.8862  F1 0.8880
+  Text (TF-IDF) only     Neural Network         acc 0.8962  F1 0.8976
+  Metadata only          Logistic Regression    acc 0.9042  F1 0.9055
+  Metadata only          Naive Bayes            acc 0.8723  F1 0.8828
+  Metadata only          Random Forest          acc 0.8942  F1 0.8975
+  Metadata only          Neural Network         acc 0.8922  F1 0.8958
+  Text + Metadata        Logistic Regression    acc 0.9222  F1 0.9234
+  Text + Metadata        Naive Bayes            acc 0.9202  F1 0.9225
+  Text + Metadata        Random Forest          acc 0.9062  F1 0.9073
+  Text + Metadata        Neural Network         acc 0.9142  F1 0.9159
+
+[Phase 5] 5-fold CV F1 (Logistic Regression): 0.9148 +/- 0.0084
+
+[Cross-check] scikit-learn reference accuracies (combined view)
+  Logistic Regression    0.9222
+  Naive Bayes            0.9202
+  Random Forest          0.9122
+  Neural Network         0.9002
+
+[Phase 5] BEST MODEL BY F1 : Logistic Regression (F1 = 0.9234, recall = 0.9109)
+
+                     accuracy precision    recall        f1 specificity   roc_auc false_positives false_negatives fit_seconds predict_seconds
+Logistic Regression  0.922156  0.936255  0.910853  0.923379    0.934156  0.968817              16              23       2.736           0.001
+Naive Bayes           0.92016  0.922481  0.922481  0.922481    0.917695  0.969056              20              20       0.012           0.002
+Random Forest        0.906188  0.923695  0.891473  0.907298    0.921811   0.96837              19              28      12.422           0.035
+Neural Network       0.914172  0.924901  0.906977  0.915851    0.921811  0.959773              19              24       3.658           0.005

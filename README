@@ -1,0 +1,41 @@
+# Project  — AI-Powered Phishing Email Detection Using Text Classification
+
+**Summer Internship Program in AI & ML 2026**  
+*Indian Institute of Computing and Technology*  
+*Affiliated: I-STEM, Office of the Principal Scientific Adviser to the Government of India*
+
+**Submitted by**: Kotakonda Rohith | **Mentor**: Ashish Negi | **Submission date**: 26 July 2026
+
+---
+
+## 📌 Project Overview
+Phishing remains one of the most critical threats in digital cybersecurity. This project implements an advanced text-classification pipeline engineered to distinguish malicious phishing attempts from legitimate corporate correspondence. The entire architecture—including email tokenization, vocabulary parsing, feature arrays, and multiple supervised classification models—was built independently from scratch using **NumPy** to ensure deep architectural comprehension.
+
+## 🚀 Architectural Workflow (Built From Scratch)
+- **Pre-processing Engine**: Programmed custom string parsers to lowercase text, remove structural layout footprints, isolate alphanumeric sequences, and filter out high-frequency stop words.
+- **Feature Extraction**: Generated sparse structural matrix representations using vector tracking algorithms built manually to compute word densities.
+- **Classification Engine**: Structured mathematical matrix iterations to train independent model variations.
+- **Evaluation Pipeline**: Computed extensive validation arrays evaluating precision configurations to map and minimize dangerous classification oversights.
+
+## 📊 Performance & Results
+*Measured on a held-out stratified validation split of public benchmark datasets containing verified threat structures.*
+
+| Model | Accuracy | Precision | Recall | F1-Score | ROC AUC |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Naive Bayes Classifier** | [e.g., 0.9215] | [e.g., 0.9010] | [e.g., 0.9420] | [e.g., 0.9210] | [e.g., 0.9620] |
+| **Logistic Regression** | [e.g., 0.9410] | [e.g., 0.9250] | [e.g., 0.9580] | [e.g., 0.9412] | [e.g., 0.9810] |
+| **Support Vector Machine (SVM)** | [e.g., 0.9350] | [e.g., 0.9180] | [e.g., 0.9490] | [e.g., 0.9332] | [e.g., 0.9740] |
+
+*(Note: Scikit-learn algorithms are imported strictly within the final testing script to act as an un-biased mathematical baseline validator).*
+
+## 🛠️ Tech Stack & Dependencies
+- **Primary Language**: Python
+- **Core Vector Mathematics**: NumPy
+- **Data Engineering**: Pandas, Handling standard arrays
+- **Evaluation Visualizations**: Matplotlib, Seaborn
+
+---
+
+## 🎯 High-Probability Campus Interview Questions
+- **"Why is Recall the defining security metric for this project?"**: If the model flags a safe email as spam (False Positive), a user simply checks their junk folder. But if a malicious phishing email slips through unnoticed (**False Negative**), it opens the door to network compromise. Thus, maximizing **Recall** is critical.
+- **"How did you mathematically handle the conditional probabilities in Naive Bayes from scratch?"**: Built a dictionary lookup framework inside NumPy to compute log-probabilities, preventing arithmetic underflow when multiplying long sequences of small floating-point decimals.

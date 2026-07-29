@@ -1,10 +1,10 @@
-# Project 2 — AI-Driven Phishing Email Detection Using NLP
+# Project — AI-Driven Phishing Email Detection Using NLP
 
 **Summer Internship Program in AI & ML 2026**
 Indian Institute of Computing and Technology
 Affiliated: I-STEM, Office of the Principal Scientific Adviser to the Government of India
 
-**Submitted by:** K. Rohith  ·  **Enrollment No.:** 101537
+**Submitted by:** Kotakonda Rohith  ·  **Enrollment No.:** 101537
 **Mentor:** Ashish Negi  ·  **Submission date:** 26 July 2026
 
 A **defensive** e-mail classifier that separates phishing from legitimate mail using two
